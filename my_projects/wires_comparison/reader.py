@@ -3,13 +3,15 @@ import pandas as pd
 import numpy as np
 
 
-def reader(filename: Path):
+def reader_func(filename: Path):
     df = pd.read_csv(filename)
     return df
 
 
 def create_unequal(df):
     '''creating uneque value of Lidents; deleting empty rows and kaufteil wires'''
+
+    output_dict = {}
 
     for row in df.itertuples():
         # print(row)
@@ -23,12 +25,14 @@ def create_unequal(df):
         elif not pd.isna(row.SL_LIDENT):
             df.at[row.Index, 'lid_uneque'] = row.SL_LIDENT
 
+        # output_dict[row.KSID] = {row.LTGNR:}
+
     return df
 
 
 if __name__ == '__main__':
     file = Path('test_excell.csv')
-    lines = reader(file)
+    lines = reader_func(file)
     # print(lines)
     check = (str(lines.SLNR[1]))
     # print(type(check))
