@@ -9,12 +9,12 @@ def reader(filename: Path):
 
 
 def create_unequal(df):
-    '''creatin uneque value of Lidents; deleting empty rows and kaufteil wires'''
+    '''creating uneque value of Lidents; deleting empty rows and kaufteil wires'''
 
     for row in df.itertuples():
         # print(row)
         if pd.isna(row.KSID) or not pd.isna(row.Kaufteil):
-            df = df.drop(labels=row.Index, axis=0)
+            df.drop(labels=row.Index, axis=0, inplace=True)
 
         if pd.isna(row.BG_LIDENT) and pd.isna(row.SL_LIDENT):
             df.at[row.Index, 'lid_uneque'] = row.LIDENT
@@ -26,18 +26,17 @@ def create_unequal(df):
     return df
 
 
-
 if __name__ == '__main__':
-    file = Path('IRM_wires.csv')
+    file = Path('test_excell.csv')
     lines = reader(file)
     # print(lines)
     check = (str(lines.SLNR[1]))
     # print(type(check))
     lines_new = create_unequal(lines)
-    print(lines_new)
-    lines_new.to_excel('data.xlsx')
+    # print(lines_new)
+    lines_new.to_excel('data.xlsx', index=False)
 
-    print(type(np.nan))
+    # print(type(np.nan))
 
 
 
