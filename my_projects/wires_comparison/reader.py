@@ -9,21 +9,28 @@ def reader(filename: Path):
 
 
 def create_unequal(df):
+    '''creatin uneque value of Lidents; deleting empty rows and kaufteil wires'''
 
     for row in df.itertuples():
-        if pd.isna(row.BG_LIDENT) and pd.isna(row.SL_LIDENT):
-            df.at[row.Index, 'lid_uneque'] = row.LIDENT
-        elif not pd.isna(row.BG_LIDENT):
-            df.at[row.Index, 'lid_uneque'] = row.BG_LIDENT
-        elif not pd.isna(row.SL_LIDENT):
-            df.at[row.Index, 'lid_uneque'] = row.SL_LIDENT
+        # print(row)
+        if pd.isna(row.KSID):
+            df = df.drop(labels=row.Index, axis=0)
+        elif not pd.isna(row.Kaufteil):
+            df = df.drop(labels=row.Index, axis=0)
+        else:
+            if pd.isna(row.BG_LIDENT) and pd.isna(row.SL_LIDENT):
+                df.at[row.Index, 'lid_uneque'] = row.LIDENT
+            elif not pd.isna(row.BG_LIDENT):
+                df.at[row.Index, 'lid_uneque'] = row.BG_LIDENT
+            elif not pd.isna(row.SL_LIDENT):
+                df.at[row.Index, 'lid_uneque'] = row.SL_LIDENT
 
     return df
 
 
 
 if __name__ == '__main__':
-    file = Path('IRM_wires.csv')
+    file = Path('test_excell.csv')
     lines = reader(file)
     # print(lines)
     check = (str(lines.SLNR[1]))
