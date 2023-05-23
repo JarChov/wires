@@ -4,7 +4,7 @@ import numpy as np
 
 
 def reader_func(filename: Path):
-    df = pd.read_csv(filename)
+    df = pd.read_csv(filename, encoding='utf-8')  # TODO: add delimiter=';'
     return df
 
 
@@ -24,8 +24,6 @@ def create_unequal(df):
             df.at[row.Index, 'lid_uneque'] = row.BG_LIDENT
         elif not pd.isna(row.SL_LIDENT):
             df.at[row.Index, 'lid_uneque'] = row.SL_LIDENT
-
-        # output_dict[row.KSID] = {row.LTGNR:}
 
     return df
 
